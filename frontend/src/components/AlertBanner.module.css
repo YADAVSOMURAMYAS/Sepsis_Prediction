@@ -1,0 +1,49 @@
+.banner {
+  background: linear-gradient(90deg, rgba(239,68,68,0.12), rgba(220,38,38,0.06));
+  border: 1px solid rgba(239,68,68,0.3);
+  border-left: 4px solid var(--color-red);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  flex-wrap: wrap;
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-red);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.messages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  font-size: 0.78rem;
+  color: var(--color-red);
+}
+
+.item strong {
+  font-weight: 700;
+}
+
+.more {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}

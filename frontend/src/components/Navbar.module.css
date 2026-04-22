@@ -1,0 +1,138 @@
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.inner {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logoIcon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--gradient-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: var(--shadow-glow-cyan);
+}
+.logoText {
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+}
+.logoBadge {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-cyan);
+  border: 1px solid var(--color-cyan);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  opacity: 0.7;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.2s, background 0.2s;
+  text-decoration: none;
+}
+.link:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+.linkActive {
+  color: var(--color-cyan) !important;
+  background: var(--color-cyan-dim) !important;
+}
+.linkUnderline {
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--gradient-cyan);
+  border-radius: 99px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.liveChip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 99px;
+  background: var(--color-green-dim);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: var(--color-green);
+}
+
+.themeBtn {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.themeBtn:hover {
+  color: var(--color-cyan);
+  border-color: var(--color-cyan);
+  background: var(--color-cyan-dim);
+}
+
+
+@media (max-width: 768px) {
+  .links { display: none; }
+  .logoBadge { display: none; }
+  .hospitalChip { display: none; }
+}
+
+.hospitalChip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 99px;
+  background: var(--bg-elevated);
+  border: 1px solid;
+  max-width: 240px;
+}
+

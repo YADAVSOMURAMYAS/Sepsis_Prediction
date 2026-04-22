@@ -1,0 +1,60 @@
+# ─────────────────────────────────────────────────────────
+# Sepsis Prediction Project — .gitignore
+# ─────────────────────────────────────────────────────────
+
+# Large data files — never push
+data/
+*.psv
+*.csv
+*.parquet
+
+# Trained models — large binary files
+models/
+*.joblib
+*.pkl
+# ← Allow the production XGBoost model used by the Docker build
+!xgboost_model.pkl
+
+# Output folder — all generated files
+output/
+!output/.gitkeep
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+sepsis/
+venv/
+env/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment variables
+.env
+secrets.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+logs/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Temp
+*.tmp
+*.bak
