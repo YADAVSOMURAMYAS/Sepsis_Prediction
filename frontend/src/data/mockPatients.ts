@@ -96,8 +96,6 @@ function makePatient(idx: number): Patient {
   }
 }
 
-// Deterministic seed for stable renders
-const seed = 42
 function seededPatients(n: number): Patient[] {
   const result: Patient[] = []
   // We just produce n patients; in real app these come from API
