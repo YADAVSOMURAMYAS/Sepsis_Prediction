@@ -1,0 +1,20 @@
+XGBoost Evaluation Report
+==================================================
+Best round    : 228
+Best test-AUC : 0.7547
+Threshold     : 0.55
+ROC-AUC       : 0.7547
+Recall        : 0.7211
+Precision     : 0.0562
+F1            : 0.1042
+Specificity   : 0.6629
+TN=200626  FP=102033  FN=2348  TP=6071
+
+              precision    recall  f1-score   support
+
+   No Sepsis       0.99      0.66      0.79    302659
+      Sepsis       0.06      0.72      0.10      8419
+
+    accuracy                           0.66    311078
+   macro avg       0.52      0.69      0.45    311078
+weighted avg       0.96      0.66      0.77    311078

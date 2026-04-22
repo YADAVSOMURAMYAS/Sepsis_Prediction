@@ -1,0 +1,18 @@
+Phase 4 — Patient-Level Severity Scoring
+==================================================
+Patient ROC-AUC        : 0.8002
+Final threshold        : 0.65
+Recall                 : 0.6945
+Precision              : 0.1959
+F1                     : 0.3056
+TN=5811 FP=1671 FN=179 TP=407
+False alarms per catch : 4.1
+
+              precision    recall  f1-score   support
+
+   No Sepsis       0.97      0.78      0.86      7482
+      Sepsis       0.20      0.69      0.31       586
+
+    accuracy                           0.77      8068
+   macro avg       0.58      0.74      0.58      8068
+weighted avg       0.91      0.77      0.82      8068
