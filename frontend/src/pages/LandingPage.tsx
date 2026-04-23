@@ -1,122 +1,49 @@
 import { useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, Shield, Zap, BarChart3, Activity, Brain, Clock } from 'lucide-react'
+import { ArrowRight, Shield, Zap, BarChart3, Activity, Brain, Clock, Stethoscope } from 'lucide-react'
 import styles from './LandingPage.module.css'
 
-/* ── 3D Beating Heart ─────────────────────────────────── */
-function HeartCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')!
-    let t = 0
-
-    canvas.width  = 500
-    canvas.height = 500
-
-    function heartX(t: number) { return 16 * Math.pow(Math.sin(t), 3) }
-    function heartY(t: number) {
-      return -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))
-    }
-
-    let raf: number
-    const draw = () => {
-      ctx.clearRect(0, 0, 500, 500)
-      t += 0.005
-      const beat = 1 + 0.06 * Math.sin(t * 4)
-      const cx = 250, cy = 260
-
-      /* Glow rings */
-      for (let r = 4; r >= 1; r--) {
-        ctx.beginPath()
-        ctx.arc(cx, cy, 90 * beat * r * 0.34, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(6, 182, 212, ${0.025 / r})`
-        ctx.fill()
-      }
-
-      /* Wireframe heart */
-      const POINTS = 200
-      const scale = 11 * beat
-      ctx.beginPath()
-      for (let i = 0; i <= POINTS; i++) {
-        const angle = (i / POINTS) * Math.PI * 2
-        const x = cx + heartX(angle) * scale
-        const y = cy + heartY(angle) * scale
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
-      }
-      const grad = ctx.createLinearGradient(cx - 120, cy - 120, cx + 120, cy + 120)
-      grad.addColorStop(0, `rgba(239, 68, 68, ${0.7 + 0.3 * Math.sin(t * 4)})`)
-      grad.addColorStop(0.5, `rgba(220, 38, 38, 0.85)`)
-      grad.addColorStop(1, `rgba(239, 68, 68, 0.5)`)
-      ctx.strokeStyle = grad
-      ctx.lineWidth = 2.5
-      ctx.shadowColor = 'rgba(239, 68, 68, 0.8)'
-      ctx.shadowBlur = 20
-      ctx.stroke()
-      ctx.shadowBlur = 0
-
-      /* Inner fill */
-      ctx.beginPath()
-      for (let i = 0; i <= POINTS; i++) {
-        const angle = (i / POINTS) * Math.PI * 2
-        const x = cx + heartX(angle) * scale
-        const y = cy + heartY(angle) * scale
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
-      }
-      ctx.fillStyle = `rgba(239, 68, 68, 0.07)`
-      ctx.fill()
-
-      /* Meridian lines for 3D effect */
-      for (let m = 0; m < 6; m++) {
-        const mAngle = (m / 6) * Math.PI
-        ctx.beginPath()
-        for (let i = 0; i <= POINTS; i++) {
-          const angle = (i / POINTS) * Math.PI * 2
-          const x3d = heartX(angle)
-          const y3d = heartY(angle)
-          const z3d = Math.sin(angle) * 6
-          const proj = 300 / (300 + z3d * Math.cos(mAngle))
-          const x = cx + (x3d * Math.cos(mAngle) - z3d * Math.sin(mAngle)) * scale * proj
-          const y = cy + y3d * scale * proj
-          i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
-        }
-        ctx.strokeStyle = `rgba(6, 182, 212, 0.07)`
-        ctx.lineWidth = 0.8
-        ctx.stroke()
-      }
-
-      /* EKG spike overlay */
-      const spikeProgress = (t * 0.8) % 1
-      if (spikeProgress < 0.5) {
-        const sp = spikeProgress / 0.5
-        const x0 = cx - 140 + sp * 280
-        ctx.beginPath()
-        ctx.moveTo(x0, cy + 170)
-        for (let s = 0; s < 40; s++) {
-          const sx = x0 - 60 + s * 3
-          const sy = cy + 170 - Math.sin(s * 0.5) * (s > 10 && s < 20 ? 60 : 5) * (1 - Math.abs(s / 40 - 0.5) * 2)
-          s === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy)
-        }
-        ctx.strokeStyle = `rgba(6, 182, 212, ${0.6 - sp * 0.6})`
-        ctx.lineWidth = 1.5
-        ctx.stroke()
-      }
-
-      raf = requestAnimationFrame(draw)
-    }
-    draw()
-    return () => cancelAnimationFrame(raf)
-  }, [])
-
+/* ── Hero Symbol ─────────────────────────────────── */
+function HeroSymbol() {
   return (
-    <canvas
-      ref={canvasRef}
-      className={styles.heartCanvas}
-      style={{ width: '100%', maxWidth: 500, height: 'auto' }}
-    />
+    <div style={{ position: 'relative', width: '100%', maxWidth: 500, aspectRatio: '1/1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Outer Pulse */}
+      <motion.div
+        animate={{ scale: [1, 1.25, 1], opacity: [0.2, 0.5, 0.2] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          position: 'absolute',
+          width: '80%', height: '80%',
+          background: 'radial-gradient(circle, rgba(6,182,212,0.3) 0%, rgba(6,182,212,0) 70%)',
+          borderRadius: '50%',
+        }}
+      />
+      {/* Inner Pulse */}
+      <motion.div
+        animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.8, 0.4] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          position: 'absolute',
+          width: '55%', height: '55%',
+          background: 'radial-gradient(circle, rgba(14,165,233,0.4) 0%, rgba(14,165,233,0) 70%)',
+          borderRadius: '50%',
+        }}
+      />
+      
+      {/* Stethoscope Icon */}
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1, y: [-5, 5, -5] }}
+        transition={{ 
+          y: { duration: 4, repeat: Infinity, ease: 'easeInOut' },
+          default: { duration: 1, ease: 'easeOut' }
+        }}
+        style={{ position: 'relative', zIndex: 10, color: '#06b6d4', filter: 'drop-shadow(0 0 25px rgba(6, 182, 212, 0.7))' }}
+      >
+        <Stethoscope size={180} strokeWidth={1.5} />
+      </motion.div>
+    </div>
   )
 }
 
@@ -265,7 +192,7 @@ export default function LandingPage() {
             </motion.div>
           </div>
 
-          {/* Right – 3D Heart + Floating Cards */}
+          {/* Right – 3D Hospital Symbol + Floating Cards */}
           <div className={styles.heroRight}>
             <motion.div
               className={styles.heartWrap}
@@ -273,7 +200,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
             >
-              <HeartCanvas />
+              <HeroSymbol />
               <FloatingCard label="HR"   value="112" unit="bpm"  status="critical" delay={0.8} x="75%"  y="12%" rotate={3}  />
               <FloatingCard label="MAP"  value="58"  unit="mmHg" status="critical" delay={1.0} x="-8%"  y="60%" rotate={-4} />
               <FloatingCard label="SpO₂" value="94.2" unit="%" status="warning"  delay={1.2} x="70%"  y="65%" rotate={2}  />
