@@ -8,7 +8,6 @@
 
 ## 🎥 Video Demonstration
 
-> 📹 **[Watch Full Demo on YouTube](#)** ← *(replace with your YouTube link)*
 
 ---
 
