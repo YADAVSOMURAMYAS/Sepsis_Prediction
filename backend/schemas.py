@@ -96,3 +96,16 @@ class PatientCreateRequest(BaseModel):
     spo2:      float = 98.0
     rr:        float = 16.0
     glucose:   float = 100.0
+
+
+class VitalUpdateRequest(BaseModel):
+    """New vital readings to record for an existing patient."""
+    hr:      float
+    sbp:     float
+    dbp:     float
+    map:     float
+    temp:    float
+    spo2:    float
+    rr:      float
+    glucose: float
+

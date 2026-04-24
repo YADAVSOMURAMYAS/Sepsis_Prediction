@@ -5,9 +5,10 @@ import {
   AreaChart, Area, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine
 } from 'recharts'
-import { Activity, Brain, ChevronDown } from 'lucide-react'
+import { Activity, Brain, ChevronDown, RefreshCw } from 'lucide-react'
 import { usePatients } from '../context/PatientContext'
 import type { Patient } from '../api/patients'
+import UpdateVitalsModal from '../components/UpdateVitalsModal'
 import styles from './PatientsPage.module.css'
 
 /* ── Custom Tooltip ─────────────────────────────────── */
@@ -292,9 +293,10 @@ export default function PatientsPage() {
   const [params] = useSearchParams()
   const initId = params.get('id') || patients[0]?.id || ''
 
-  const [selectedId, setSelectedId] = useState(initId)
-  const [activeTab, setActiveTab]   = useState<'vitals' | 'trend' | 'predict' | 'population'>('vitals')
-  const [dropOpen, setDropOpen]     = useState(false)
+  const [selectedId,      setSelectedId]      = useState(initId)
+  const [activeTab,       setActiveTab]       = useState<'vitals' | 'trend' | 'predict' | 'population'>('vitals')
+  const [dropOpen,        setDropOpen]        = useState(false)
+  const [updateModalOpen, setUpdateModalOpen] = useState(false)
 
   const patient = useMemo(() => patients.find(p => p.id === selectedId) || patients[0], [selectedId, patients])
 
@@ -393,7 +395,25 @@ export default function PatientsPage() {
               <span className="section-label">Risk Level</span>
               <span className={`badge badge-${patient.risk.toLowerCase()}`}>{patient.risk}</span>
             </div>
+            {/* Update Vitals button */}
+            <button
+              id="update-vitals-btn"
+              className="btn btn-primary"
+              style={{ marginLeft: 'auto', gap: 6 }}
+              onClick={() => setUpdateModalOpen(true)}
+            >
+              <RefreshCw size={14} /> Update Vitals
+            </button>
           </motion.div>
+        )}
+
+        {/* Update Vitals Modal */}
+        {patient && (
+          <UpdateVitalsModal
+            open={updateModalOpen}
+            onClose={() => setUpdateModalOpen(false)}
+            patient={patient}
+          />
         )}
 
         {/* Tabs */}

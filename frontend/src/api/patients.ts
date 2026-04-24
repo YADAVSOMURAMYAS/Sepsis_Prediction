@@ -31,6 +31,11 @@ export interface PatientCreatePayload {
   temp: number; spo2: number; rr: number; glucose: number
 }
 
+export interface VitalUpdatePayload {
+  hr: number; sbp: number; dbp: number; map: number
+  temp: number; spo2: number; rr: number; glucose: number
+}
+
 export const patientsApi = {
   list: () => apiFetch<Patient[]>('/patients'),
 
@@ -45,4 +50,11 @@ export const patientsApi = {
 
   history: (patientId: string) =>
     apiFetch<VitalHistory[]>(`/patients/${patientId}/history`),
+
+  updateVitals: (patientId: string, payload: VitalUpdatePayload) =>
+    apiFetch<Patient>(`/patients/${patientId}/vitals`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
 }
+

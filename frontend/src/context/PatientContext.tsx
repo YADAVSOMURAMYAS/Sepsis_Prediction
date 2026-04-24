@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import type { ReactNode } from 'react'
 import { patientsApi } from '../api/patients'
-import type { Patient } from '../api/patients'
+import type { Patient, VitalUpdatePayload } from '../api/patients'
 import { useAuth } from './AuthContext'
 
 interface PatientContextType {
@@ -11,6 +11,7 @@ interface PatientContextType {
   refresh:         () => Promise<void>
   addPatient:      (payload: Parameters<typeof patientsApi.create>[0]) => Promise<Patient>
   dischargePatient:(id: string) => Promise<void>
+  updateVitals:    (id: string, payload: VitalUpdatePayload) => Promise<Patient>
 }
 
 const PatientContext = createContext<PatientContextType>({
@@ -18,6 +19,7 @@ const PatientContext = createContext<PatientContextType>({
   refresh: async () => {},
   addPatient: async () => { throw new Error('not ready') },
   dischargePatient: async () => {},
+  updateVitals: async () => { throw new Error('not ready') },
 })
 
 export function PatientProvider({ children }: { children: ReactNode }) {
@@ -55,11 +57,22 @@ export function PatientProvider({ children }: { children: ReactNode }) {
     setPatients(prev => prev.filter(p => p.id !== id))
   }, [])
 
+  const updateVitals = useCallback(async (id: string, payload: VitalUpdatePayload) => {
+    const updated = await patientsApi.updateVitals(id, payload)
+    setPatients(prev =>
+      prev
+        .map(p => p.id === id ? updated : p)
+        .sort((a, b) => b.priority_score - a.priority_score)
+    )
+    return updated
+  }, [])
+
   return (
-    <PatientContext.Provider value={{ patients, loading, error, refresh, addPatient, dischargePatient }}>
+    <PatientContext.Provider value={{ patients, loading, error, refresh, addPatient, dischargePatient, updateVitals }}>
       {children}
     </PatientContext.Provider>
   )
 }
 
 export const usePatients = () => useContext(PatientContext)
+
